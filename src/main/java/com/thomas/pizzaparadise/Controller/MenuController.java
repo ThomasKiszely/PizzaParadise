@@ -24,9 +24,9 @@ public class MenuController {
 
     @GetMapping("/menu")
     public String menu(Model model) {
-        model.addAttribute("pizza", new Pizza());
-        model.addAttribute("topping", new Topping());
-        model.addAttribute("bestilling", new Bestilling());
+//        model.addAttribute("pizza", new Pizza());
+//        model.addAttribute("topping", new Topping());
+//        model.addAttribute("bestilling", new Bestilling());
         model.addAttribute("pizzas", pizzaService.readPizzas());
         model.addAttribute("toppings", pizzaService.readToppings());
         return "menu";

@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -34,8 +35,26 @@ public class PizzaRepository {
     }
 
     public List<Pizza> readPizzas() {
+        List<Pizza> pizzas = new ArrayList<>();
         String sql = "select * from pizza";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Pizza.class));
+        try (Connection connection = jdbcTemplate.getDataSource().getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("pizza_id");
+                    String pizzaName = resultSet.getString("pizza_name");
+                    String pizzaDescription = resultSet.getString("pizza_beskrivelse");
+                    double price = resultSet.getDouble("pizza_pris");
+                    Pizza pizza = new Pizza(id, pizzaName, pizzaDescription, price);
+                    pizzas.add(pizza);
+                    System.out.println(pizzaName);
+                }
+
+            }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return pizzas;
     }
 
     public void updatePizza(Pizza pizza) {
@@ -67,6 +86,7 @@ public class PizzaRepository {
     }
 
     public List<Topping> readToppings() {
+        List<Topping> toppings = new ArrayList<>();
         String sql = "select * from topping";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Topping.class));
     }

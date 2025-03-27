@@ -57,12 +57,11 @@ public class Pizza {
 
     public Pizza(){}
 
-    public Pizza(int id, String name, String description, double price, ArrayList<Topping> toppings) {
+    public Pizza(int id, String name, String description, double price) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.toppings = toppings;
     }
     @Override
     public String toString() {
