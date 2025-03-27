@@ -6,10 +6,8 @@ import com.thomas.pizzaparadise.Model.Pizza;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +37,21 @@ public class BrugerRepository {
     }
 
     public List<Bruger> readBrugere() {
+        List<Bruger> brugerList = new ArrayList<>();
         String sql = "select * from bruger";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Bruger.class));
+        try (Connection connection = jdbcTemplate.getDataSource().getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("bruger_id");
+                String password = resultSet.getString("bruger_password");
+                String email = resultSet.getString("bruger_email");
+                brugerList.add(new Bruger(id, email, password, 0));
+            }
+        }  catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return brugerList;
     }
 
     public void updateBruger(Bruger bruger) {

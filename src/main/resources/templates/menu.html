@@ -29,9 +29,9 @@
     <label for="topping">Choose topping:</label>
     <select name="topping" id="topping">
         <option th:each="topping : ${toppings}"
-        th:value="${toppings}"
-        th:text="${toppings}"
-        th:selected="${toppings == topping.name}">Topping</option>
+        th:value="${topping}"
+        th:text="${topping}"
+        th:selected="${topping == topping.name}">Topping</option>
             <br>
         <button type="submit">Tilføj topping</button>
     </select>

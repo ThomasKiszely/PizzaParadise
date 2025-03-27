@@ -31,17 +31,14 @@ public class BrugerService {
 
     public Bruger loginBruger(String email, String password) {
         List<Bruger> brugere = brugerRepository.readBrugere();
-        try {
             for (Bruger bruger : brugere) {
+                System.out.println("Checking bruger " + bruger.getEmail() + " " + bruger.getPassword());
                 if (email.equals(bruger.getEmail()) && password.equals(bruger.getPassword())) {
                     setCurrentBruger(bruger);
                     System.out.println("Current Bruger: " + getCurrentBruger());
                     return bruger;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
-        return null;
-    }
 }

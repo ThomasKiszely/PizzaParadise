@@ -88,7 +88,21 @@ public class PizzaRepository {
     public List<Topping> readToppings() {
         List<Topping> toppings = new ArrayList<>();
         String sql = "select * from topping";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Topping.class));
+        try (Connection connection = jdbcTemplate.getDataSource().getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("topping_id");
+                String toppingName = resultSet.getString("topping_navn");
+                double price = resultSet.getDouble("topping_pris");
+                Topping topping = new Topping(id, toppingName, price);
+                toppings.add(topping);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return toppings;
     }
 
     public void deleteTopping(Topping topping) {

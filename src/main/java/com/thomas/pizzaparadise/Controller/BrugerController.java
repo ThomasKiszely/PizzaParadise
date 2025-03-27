@@ -16,16 +16,19 @@ public class BrugerController {
     BrugerService brugerService;
 
     @GetMapping("/index")
-    public String index() {
+    public String index(Model model) {
         return "index";
     }
 
     @PostMapping("/index")
-    public String loginBruger(String email, String password, Model model) {
+    public String loginBruger(@ModelAttribute Bruger bruger, Model model) {
+       String email = bruger.getEmail();
+       String password = bruger.getPassword();
+        System.out.println("email: " + email + ", password: " + password);
         model.addAttribute("email", email);
         model.addAttribute("password", password);
         if (brugerService.loginBruger(email, password) != null) {
-            return "menu";
+            return "redirect:/menu";
         } else {
             model.addAttribute("error", "Forkert email eller password");
             return "index";
