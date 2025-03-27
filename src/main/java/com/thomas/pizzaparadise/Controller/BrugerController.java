@@ -15,8 +15,9 @@ public class BrugerController {
     @Autowired
     BrugerService brugerService;
 
-    @GetMapping("/index")
+    @GetMapping("/")
     public String index(Model model) {
+        model.addAttribute("bruger", new Bruger());
         return "index";
     }
 

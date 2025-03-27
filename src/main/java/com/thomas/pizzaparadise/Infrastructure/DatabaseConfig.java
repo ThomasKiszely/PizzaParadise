@@ -21,7 +21,7 @@ public class DatabaseConfig {
 
         ds.setUsername("root");
 
-        ds.setPassword("root");
+        ds.setPassword("Sqlroot");
 
         return ds;
 
