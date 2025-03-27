@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<h1 style="text-align: center"> Pizza Paradise</h1>
+</head>
+<body>
+<form th:action="@{/index}" th:object="${bruger}" th:method="post">
+    <label for="email">Indtast venligst din email:</label>
+    <input type="email" id="email" name="email" required>
+    <label for="password">Indtast venligst dit password</label>
+    <input type="password" id="password" name="password" required>
+
+    <div class="wrapper" style="text-align: center;">
+        <a href="/register">Registrer</a>
+        <button type="login">Login</button>
+    </div>
+</form>
+
+<p th:if="${error}" th:text="${error}" style="color:deeppink;"></p>
+
+</body>
+</html>
+

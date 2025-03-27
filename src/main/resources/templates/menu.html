@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+<body>
+<h1>Menu</h1>
+<p>Plain pizza</p>
+<img src="https://valentinos.com/wp-content/uploads/2019/06/cheese.png" alt="Plain pizza">
+<form th:action="@{/menu}" th:object="${pizza}" th:method="post">
+
+    <label for="pizza">Choose size:</label>
+
+    <select name="pizza" id="pizza">
+
+        <option th:each="pizza : ${pizza}"
+
+        th:value="${pizza}"
+
+        th:text="${pizza}"
+
+        th:selected="${pizza == pizza.name}">Pizza</option>
+    </select>
+    <br>
+    <button type="submit">Tilføj pizza</button>
+</form>
+<form th:action="@{/menu}" th:object="${topping}" th:method="post">
+    <label for="topping">Choose topping:</label>
+    <select name="topping" id="topping">
+        <option th:each="topping : ${toppings}"
+        th:value="${toppings}"
+        th:text="${toppings}"
+        th:selected="${toppings == topping.name}">Topping</option>
+            <br>
+        <button type="submit">Tilføj topping</button>
+    </select>
+</form>
+</body>
+</html>
